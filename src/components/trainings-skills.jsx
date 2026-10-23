@@ -38,7 +38,8 @@ export function TrainingsSkills() {
 
           <div className="flex flex-col gap-4 lg:col-span-7">
             <h3 className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Core skills</h3>
-            <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+            {/* auto-fill: as many ~7.5rem tiles per row as the width allows, on every screen size */}
+            <ul className="grid grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] gap-3">
               {skills.map((s, i) => (
                 <motion.li
                   key={s.id ?? s.symbol}
@@ -54,7 +55,7 @@ export function TrainingsSkills() {
                     name={s.name}
                     size="sm"
                     variant={i % 5 === 0 ? 'solid' : 'outline'}
-                    className="transition-colors hover:border-primary"
+                    className="h-full min-w-0 break-words transition-colors hover:border-primary"
                   />
                 </motion.li>
               ))}
