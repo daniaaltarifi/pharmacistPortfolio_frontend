@@ -135,15 +135,15 @@ export function News() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: easeOut }}
-            className={`grid gap-6 ${rest.length ? 'lg:grid-cols-12' : ''}`}
+            className={`grid grid-cols-1 gap-6 ${rest.length ? 'lg:grid-cols-12' : ''}`}
           >
             {featured && (
-              <div className={rest.length ? 'lg:col-span-7' : ''}>
+              <div className={`min-w-0 ${rest.length ? 'lg:col-span-7' : ''}`}>
                 <FeaturedCard item={featured} />
               </div>
             )}
             {rest.length > 0 && (
-              <div className="grid gap-4 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+              <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
                 {rest.map((item, i) => (
                   <motion.div
                     key={item.id}

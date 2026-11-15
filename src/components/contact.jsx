@@ -53,7 +53,7 @@ export function Contact() {
           </p>
         </Reveal>
 
-        <div className="grid items-start gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
           <Reveal className="flex flex-col gap-6 lg:col-span-5">
             <p className="text-lg leading-relaxed text-muted-foreground text-pretty">
               Open to board appointments, advisory mandates, keynote invitations and strategic partnerships in
