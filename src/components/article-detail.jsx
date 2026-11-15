@@ -53,25 +53,25 @@ export function ArticleDetail({ state, backTo, backLabel, notFoundTitle }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: easeOut }}
-      className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-16 lg:py-24"
+      className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-12 sm:gap-8 sm:py-16 lg:py-24"
     >
       <BackLink to={backTo} label={backLabel} />
 
       {item.imageUrl && (
-        <div className="overflow-hidden rounded-3xl bg-muted">
+        <div className="overflow-hidden rounded-2xl bg-muted sm:rounded-3xl">
           <img src={item.imageUrl} alt={item.title} className="aspect-[16/9] w-full object-cover" />
         </div>
       )}
 
       <header className="flex flex-col gap-4">
         <NewsMeta item={item} />
-        <h1 className="font-display text-4xl font-medium leading-tight tracking-tight text-balance md:text-5xl">
+        <h1 className="font-display text-3xl font-medium leading-tight tracking-tight break-words text-balance sm:text-4xl md:text-5xl">
           {item.title}
         </h1>
       </header>
 
       {/* whitespace-pre-line keeps the paragraph breaks the admin typed in the description */}
-      <div className="whitespace-pre-line text-lg leading-relaxed text-pretty text-foreground/90">{item.description}</div>
+      <div className="whitespace-pre-line text-base leading-relaxed text-pretty wrap-anywhere text-foreground/90 sm:text-lg">{item.description}</div>
 
       {/* Optional external link (news only; reports have none) */}
       {item.link && (

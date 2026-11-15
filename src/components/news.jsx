@@ -32,7 +32,7 @@ export function FeaturedCard({ item, basePath = '/news', cta = 'Read story' }) {
   return (
     <Link
       to={`${basePath}/${item.id}`}
-      className="group relative flex h-full min-h-[28rem] overflow-hidden rounded-3xl bg-[#08192d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      className="group relative flex h-full min-h-[22rem] overflow-hidden rounded-3xl bg-[#08192d] sm:min-h-[26rem] lg:min-h-[28rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
     >
       {item.imageUrl && (
         <img
@@ -42,12 +42,12 @@ export function FeaturedCard({ item, basePath = '/news', cta = 'Read story' }) {
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-[#08192d] via-[#08192d]/60 to-transparent" />
-      <article className="relative mt-auto flex flex-col gap-4 p-8 md:p-10">
+      <article className="relative mt-auto flex min-w-0 flex-col gap-3 p-6 sm:gap-4 sm:p-8 md:p-10">
         <NewsMeta item={item} light />
-        <h3 className="max-w-xl font-display text-3xl font-medium leading-tight tracking-tight text-white text-balance md:text-4xl">
+        <h3 className="max-w-xl font-display text-2xl font-medium leading-tight tracking-tight break-words text-white text-balance sm:text-3xl md:text-4xl">
           {item.title}
         </h3>
-        <p className="line-clamp-3 max-w-xl leading-relaxed text-white/80">{item.description}</p>
+        <p className="line-clamp-3 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">{item.description}</p>
         <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#08192d] transition-transform group-hover:-translate-y-0.5">
           {cta}
           <ArrowUpRight className="size-4 transition-transform group-hover:rotate-45" aria-hidden="true" />
@@ -61,9 +61,9 @@ export function NewsRow({ item, basePath = '/news' }) {
   return (
     <Link
       to={`${basePath}/${item.id}`}
-      className="group flex gap-5 rounded-2xl border border-border bg-card p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 transition-all min-[420px]:flex-row sm:gap-5 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
-      <div className="relative aspect-square w-28 shrink-0 overflow-hidden rounded-xl bg-muted sm:w-32">
+      <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-xl bg-muted min-[420px]:aspect-square min-[420px]:w-28 sm:w-32">
         {item.imageUrl && (
           <img
             src={item.imageUrl}
@@ -74,7 +74,7 @@ export function NewsRow({ item, basePath = '/news' }) {
       </div>
       <article className="flex min-w-0 flex-col justify-center gap-2">
         <NewsMeta item={item} />
-        <h3 className="font-display text-lg font-medium leading-snug tracking-tight text-balance">{item.title}</h3>
+        <h3 className="font-display text-lg font-medium leading-snug tracking-tight break-words text-balance">{item.title}</h3>
         <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
       </article>
     </Link>
@@ -143,7 +143,7 @@ export function News() {
               </div>
             )}
             {rest.length > 0 && (
-              <div className="flex flex-col gap-4 lg:col-span-5">
+              <div className="grid gap-4 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
                 {rest.map((item, i) => (
                   <motion.div
                     key={item.id}

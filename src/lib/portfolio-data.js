@@ -206,9 +206,9 @@ export const basicData = [
   { label: 'Full name', value: 'Feras Al-Tarifi' },
   { label: 'Nationality', value: 'Jordanian' },
   { label: 'Residence', value: 'Amman, Jordan' },
-  { label: 'Licence', value: 'BSC. PHARMACY' },
+  { label: 'Licence', value: 'Bsc. PHARMACY' },
   { label: 'Languages', value: 'Arabic, English' },
-  { label: 'Availability', value: 'Board & advisory roles' },
+  { label: 'Availability', value: 'Board, Executive & advisory roles' },
 ]
 
 export const education = [

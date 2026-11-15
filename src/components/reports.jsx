@@ -26,7 +26,7 @@ export function Reports() {
               <FeaturedCard item={featured} basePath="/reports" cta="Read report" />
             </div>
             {rest.length > 0 && (
-              <div className="flex flex-col gap-4 lg:col-span-5">
+              <div className="grid gap-4 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
                 {rest.map((item, i) => (
                   <motion.div
                     key={item.id}
