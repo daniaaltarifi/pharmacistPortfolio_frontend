@@ -4,6 +4,7 @@ import { ExternalLink, MapPin, Mic } from 'lucide-react'
 import { useEvents } from '@/hooks/use-events'
 import { SectionTitle } from './section-title'
 import { easeOut, Reveal } from './motion-primitives'
+import { ReadMoreText } from './read-more-text'
 
 const parse = (iso) => new Date(`${iso}T00:00:00`)
 const fmt = (iso, opts) => new Intl.DateTimeFormat('en-GB', opts).format(parse(iso))
@@ -37,7 +38,7 @@ function FeaturedEvent({ event }) {
             <img
               src={event.imageUrl}
               alt={event.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#08192d]/70 to-transparent" />
@@ -58,7 +59,7 @@ function FeaturedEvent({ event }) {
               Latest
             </span>
             <h3 className="font-display text-3xl font-medium leading-tight tracking-tight text-balance">{event.title}</h3>
-            <p className="leading-relaxed text-muted-foreground">{event.summary}</p>
+            <ReadMoreText className="leading-relaxed text-muted-foreground">{event.summary}</ReadMoreText>
           </div>
 
           <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-border pt-6 text-sm">
@@ -94,13 +95,13 @@ function EventCard({ event, index }) {
         <span className="size-1.5 rounded-full bg-primary" />
       </span>
 
-      <article className="group grid gap-5 overflow-hidden rounded-2xl border border-border bg-card p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg sm:grid-cols-[10rem_1fr] md:p-5">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted sm:aspect-auto sm:min-h-full">
+      <article className="group grid gap-5 overflow-hidden rounded-2xl border border-border bg-card p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg sm:grid-cols-[14rem_1fr] md:p-5 lg:grid-cols-[20rem_1fr]">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted sm:aspect-auto sm:min-h-44">
           {event.imageUrl && (
             <img
               src={event.imageUrl}
               alt=""
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-110"
             />
           )}
         </div>
@@ -109,7 +110,7 @@ function EventCard({ event, index }) {
             {fmt(event.eventDate, { day: 'numeric', month: 'short' })}
           </time>
           <h3 className="font-display text-xl font-medium leading-snug tracking-tight text-balance">{event.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground">{event.summary}</p>
+          <ReadMoreText className="text-sm leading-relaxed text-muted-foreground">{event.summary}</ReadMoreText>
           <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
             <span className="flex items-center gap-1.5 font-medium text-foreground">
               <Mic className="size-4 text-primary" aria-hidden="true" />

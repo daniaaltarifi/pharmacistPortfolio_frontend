@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router'
 import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { routes } from '@/lib/routes'
-import logo from '@/assets/logo.png'
+import logo from '@/assets/logo-white.png'
 const linkClass = ({ isActive }) =>
   `transition-colors hover:text-foreground ${isActive ? 'text-foreground' : 'text-muted-foreground'}`
 
@@ -94,6 +94,16 @@ export function Nav() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })
 
+  // Lock page scroll while the mobile menu is open so touch scrolling moves the menu
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [open])
+
   const mobileLink = (item) => (
     <NavLink
       to={item.path}
@@ -105,7 +115,11 @@ export function Nav() {
   )
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b border-border/60 ${
+        open ? 'bg-background' : 'bg-background/80 backdrop-blur-md'
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           {/* <span
@@ -115,7 +129,7 @@ export function Nav() {
             FA
           </span> */}
           {/* <img src={logo} alt="Feras Al-Tarifi" width={794} height={564} className="h-12 w-auto mix-blend-multiply" /> */}
-          <img src={logo} alt="Feras Al-Tarifi" width={794} height={564} className="h-28 w-auto mix-blend-multiply" />
+          <img src={logo} alt="Feras Al-Tarifi" width={669} height={373} className="h-28 w-auto" />
 
           {/* <span className="font-display text-base font-medium tracking-tight">Feras Al-Tarifi</span> */}
         </Link>
@@ -151,7 +165,11 @@ export function Nav() {
       <motion.div aria-hidden="true" style={{ scaleX }} className="h-0.5 origin-left bg-primary" />
 
       {open ? (
-        <nav id="v2-mobile-nav" aria-label="Mobile" className="border-t border-border xl:hidden">
+        <nav
+          id="v2-mobile-nav"
+          aria-label="Mobile"
+          className="max-h-[calc(100dvh-4.125rem)] overflow-y-auto overscroll-contain border-t border-border bg-background xl:hidden"
+        >
           <ul className="mx-auto flex max-w-7xl flex-col px-6 py-4">
             <li>
               <NavLink to="/" end className={(s) => `block py-3 ${linkClass(s)}`} onClick={() => setOpen(false)}>

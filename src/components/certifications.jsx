@@ -1,30 +1,24 @@
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
 import { useCertifications } from '@/hooks/use-certifications'
 import { SectionTitle } from './section-title'
-import { Projects } from './projects'
+import { Reveal } from './motion-primitives'
 
 function CertificationCard({ certification }) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start start'] })
-  const scale = useTransform(scrollYProgress, [0, 1], [1.25, 1])
-
   return (
     <article
-      ref={ref}
       className="grid overflow-hidden rounded-2xl border border-border bg-card shadow-2xl md:min-h-[28rem] md:grid-cols-2"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted md:aspect-auto">
         {certification.imageUrl && (
-          <motion.div style={{ scale }} className="absolute inset-0">
+          // The image keeps its own size (no cropping), so the rounded corners land on the certificate itself
+          <div className="absolute inset-0 flex items-center justify-center p-4">
             <img
               src={certification.imageUrl}
               alt={certification.title}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="max-h-full max-w-full rounded-2xl shadow-md"
             />
-          </motion.div>
+          </div>
         )}
       </div>
       <div className="flex flex-col justify-between gap-10 p-8 md:p-10">
@@ -63,10 +57,10 @@ export function Certifications() {
           </p>
         ) : (
           <div className="flex flex-col gap-8">
-            {certifications.map((certification, i) => (
-              <div key={certification.id} className="sticky" style={{ top: `${6 + i * 1.5}rem` }}>
+            {certifications.map((certification) => (
+              <Reveal key={certification.id}>
                 <CertificationCard certification={certification} />
-              </div>
+              </Reveal>
             ))}
           </div>
         )}
@@ -75,7 +69,6 @@ export function Certifications() {
       </div>
 
 
-<Projects />
   
   
       

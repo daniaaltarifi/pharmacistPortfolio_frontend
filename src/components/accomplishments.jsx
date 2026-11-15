@@ -13,7 +13,7 @@ export function CircularAccomplishments() {
   const activeItem = accomplishments[activeIdx] // undefined while loading
 
   return (
-    <section className="relative overflow-hidden bg-zinc-950 py-20 text-zinc-100 min-h-[900px] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-linear-to-b from-card via-background to-background py-20 text-foreground min-h-[900px] flex flex-col justify-center">
       {/* Background radial glow effect */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-[600px] w-[600px] rounded-full bg-cyan-500/10 blur-[140px]" />
@@ -25,7 +25,7 @@ export function CircularAccomplishments() {
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-mono uppercase tracking-widest text-cyan-400">
             Ka · Key Accomplishments
           </span>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-3 font-title text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Results, measured precisely.
           </h2>
         </div>
@@ -37,10 +37,10 @@ export function CircularAccomplishments() {
           <div className="lg:col-span-7 flex justify-center items-center relative aspect-square max-w-[550px] mx-auto w-full">
             
             {/* Outer Circular Ring Spectrum */}
-            <div className="absolute inset-2 rounded-full border border-cyan-500/20 bg-zinc-900/30 backdrop-blur-sm" />
+            <div className="absolute inset-2 rounded-full border border-cyan-500/40 bg-card/30 backdrop-blur-sm" />
             
             {/* Inner Ring Divider */}
-            <div className="absolute inset-16 rounded-full border border-cyan-500/10" />
+            <div className="absolute inset-16 rounded-full border border-cyan-500/30" />
 
             {/* Orbiting Interactive Accomplishment Nodes */}
             {accomplishments.map((item, index) => {
@@ -60,15 +60,15 @@ export function CircularAccomplishments() {
                   <span
                     className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold font-mono transition-all duration-300 border ${
                       isActive
-                        ? 'bg-cyan-400 text-zinc-950 border-cyan-300 scale-125 shadow-[0_0_20px_rgba(34,211,238,0.8)]'
-                        : 'bg-zinc-900/80 text-cyan-300 border-cyan-500/30 hover:border-cyan-400 hover:scale-110'
+                        ? 'bg-cyan-400 text-background border-cyan-300 scale-125 shadow-[0_0_20px_rgba(34,211,238,0.8)]'
+                        : 'bg-card/80 text-cyan-300 border-cyan-500/30 hover:border-cyan-400 hover:scale-110'
                     }`}
                   >
                     {item.metric}
                   </span>
 
                   {/* Tooltip on Hover */}
-                  <span className="absolute bottom-full mb-2 hidden group-hover:block whitespace-nowrap rounded-md bg-zinc-800 px-2 py-1 text-[10px] text-zinc-200 border border-zinc-700 shadow-xl z-30">
+                  <span className="absolute bottom-full mb-2 hidden group-hover:block whitespace-nowrap rounded-md bg-card px-2 py-1 text-[10px] text-foreground border border-border shadow-xl z-30">
                     {item.title}
                   </span>
                 </button>
@@ -76,7 +76,7 @@ export function CircularAccomplishments() {
             })}
 
             {/* Cutout Center Object (Molecule Image without BG) */}
-            <div className="relative z-10 w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center rounded-full border border-cyan-500/20 bg-zinc-950/80 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden">
+            <div className="relative z-10 w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center rounded-full border border-cyan-500/20 bg-background/80 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden">
               <motion.div
                 key={activeIdx}
                 initial={{ scale: 0.9, opacity: 0.8 }}
@@ -98,7 +98,7 @@ export function CircularAccomplishments() {
             {!activeItem ? (
               <div
                 aria-hidden="true"
-                className="h-72 animate-pulse rounded-2xl border border-cyan-500/20 bg-zinc-900/60"
+                className="h-72 animate-pulse rounded-2xl border border-cyan-500/20 bg-card/60"
               />
             ) : (
             <AnimatePresence mode="wait">
@@ -108,7 +108,7 @@ export function CircularAccomplishments() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="rounded-2xl border border-cyan-500/20 bg-zinc-900/60 p-8 backdrop-blur-md shadow-2xl relative overflow-hidden"
+                className="rounded-2xl border border-cyan-500/20 bg-card/60 p-8 backdrop-blur-md shadow-2xl relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full pointer-events-none" />
 
@@ -123,12 +123,12 @@ export function CircularAccomplishments() {
                   {activeItem.title}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-zinc-300 mb-6">
+                <p className="text-sm leading-relaxed text-muted-foreground mb-6">
                   {activeItem.body}
                 </p>
 
                 {/* Progress / Selector indicator */}
-                <div className="flex items-center justify-between border-t border-zinc-800 pt-4 text-xs text-zinc-500">
+                <div className="flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground/80">
                   <span>
                     Accomplishment {activeIdx + 1} of {totalItems}
                   </span>

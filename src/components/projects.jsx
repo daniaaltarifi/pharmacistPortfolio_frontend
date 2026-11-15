@@ -6,7 +6,7 @@ export function Projects() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16">
       <div className="mb-10 text-center">
-        <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        <h2 className="font-title text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Strategic Projects & Milestones
         </h2>
         <p className="mt-3 text-base text-muted-foreground">

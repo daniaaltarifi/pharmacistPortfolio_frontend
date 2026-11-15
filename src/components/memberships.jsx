@@ -73,35 +73,33 @@ export function Memberships() {
     sliderRef.current.scrollLeft = drag.current.scrollLeft - (e.pageX - drag.current.startX) * 1.5
   }
 
-  const controls = [
-    { dir: 'left', Icon: ArrowLeft, label: 'Previous membership', enabled: canScrollLeft },
-    { dir: 'right', Icon: ArrowRight, label: 'Next membership', enabled: canScrollRight },
-  ]
+  // Arrow button for either side of the slider (same style as the Experience slider)
+  const renderArrow = (dir) => {
+    const isLeft = dir === 'left'
+    const Icon = isLeft ? ArrowLeft : ArrowRight
+    return (
+      <button
+        type="button"
+        onClick={() => slide(dir)}
+        disabled={isLeft ? !canScrollLeft : !canScrollRight}
+        aria-label={isLeft ? 'Previous membership' : 'Next membership'}
+        className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition-all hover:bg-primary/85 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-30 active:scale-95 md:size-11"
+      >
+        <Icon className="size-5" aria-hidden="true" />
+      </button>
+    )
+  }
 
   return (
     <section id="memberships" className="flex flex-col gap-14 py-24 lg:py-32">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto w-full max-w-7xl px-6">
         <SectionTitle symbol="Me" label="Memberships" title="Institutions and entities shaping pharmacy & health." />
-        <div className="flex items-center gap-3">
-          {controls.map(({ dir, Icon, label, enabled }) => (
-            <button
-              key={dir}
-              type="button"
-              onClick={() => slide(dir)}
-              disabled={!enabled}
-              aria-label={label}
-              className="flex size-12 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground active:scale-95 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-border disabled:hover:bg-card disabled:hover:text-foreground"
-            >
-              <Icon className="size-5" />
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="relative overflow-hidden border-y border-border py-8" aria-hidden="true">
         <div className="animate-marquee flex w-max items-center gap-12">
           {loop.map((m, i) => (
-            <span key={`${m.org}-${i}`} className="flex items-center gap-12 font-display text-3xl font-medium tracking-tight text-muted-foreground md:text-5xl">
+            <span key={`${m.org}-${i}`} className="flex items-center gap-12 font-display text-3xl font-small tracking-tight text-muted-foreground md:text-3xl">
               {m.org}
               <span className="size-3 rounded-full bg-primary" />
             </span>
@@ -110,48 +108,53 @@ export function Memberships() {
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6">
-        <ul
-          ref={sliderRef}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          onMouseMove={onMouseMove}
-          className="scrollbar-none flex cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pt-2 select-none"
-        >
-          {memberships.map((m, i) => (
-            <motion.li
-              key={m.id ?? m.org}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.06, ease: easeOut }}
-              className="group relative flex w-[85%] shrink-0 snap-start flex-col justify-between gap-10 overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-xl sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute -right-10 -top-10 size-40 rounded-full bg-primary/5 transition-transform duration-500 group-hover:scale-150"
-              />
-              <div className="relative flex items-start justify-between gap-4">
-                <span className="flex size-12 items-center justify-center rounded-lg bg-primary font-display text-lg font-medium text-primary-foreground">
-                  {initials(m.org)}
-                </span>
-                <span className="font-display text-sm tabular-nums text-muted-foreground">
-                  {String(i + 1).padStart(2, '0')} / {String(memberships.length).padStart(2, '0')}
-                </span>
-              </div>
-              <div className="relative flex flex-col gap-3">
-                <h3 className="font-display text-2xl font-medium leading-snug tracking-tight text-balance">{m.org}</h3>
-                <p className="text-muted-foreground">
-                  {m.role}
-                  {m.sector && ` · ${m.sector}`}
-                </p>
-                <span className="mt-2 w-fit rounded-full border border-primary px-3 py-1 text-sm text-primary">
-                  {m.period}
-                </span>
-              </div>
-            </motion.li>
-          ))}
-        </ul>
+        {/* Arrows sit in their own space beside the cards, never over them */}
+        <div className="flex items-center gap-3 md:gap-5">
+          {renderArrow('left')}
+          <ul
+            ref={sliderRef}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+            onMouseMove={onMouseMove}
+            className="scrollbar-none flex min-w-0 flex-1 cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pt-2 select-none"
+          >
+            {memberships.map((m, i) => (
+              <motion.li
+                key={m.id ?? m.org}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.06, ease: easeOut }}
+                className="group relative flex w-[85%] shrink-0 snap-start flex-col justify-between gap-10 overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-xl sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute -right-10 -top-10 size-40 rounded-full bg-primary/5 transition-transform duration-500 group-hover:scale-150"
+                />
+                <div className="relative flex items-start justify-between gap-4">
+                  <span className="flex size-12 items-center justify-center rounded-lg bg-primary font-display text-lg font-medium text-primary-foreground">
+                    {initials(m.org)}
+                  </span>
+                  <span className="font-display text-sm tabular-nums text-muted-foreground">
+                    {String(i + 1).padStart(2, '0')} / {String(memberships.length).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="relative flex flex-col gap-3">
+                  <h3 className="font-display text-2xl font-medium leading-snug tracking-tight text-balance">{m.org}</h3>
+                  <p className="text-muted-foreground">
+                    {m.role}
+                    {m.sector && ` · ${m.sector}`}
+                  </p>
+                  <span className="mt-2 w-fit rounded-full border border-primary px-3 py-1 text-sm text-primary">
+                    {m.period}
+                  </span>
+                </div>
+              </motion.li>
+            ))}
+          </ul>
+          {renderArrow('right')}
+        </div>
 
         <div className="h-0.5 w-full overflow-hidden rounded-full bg-border" aria-hidden="true">
           <div

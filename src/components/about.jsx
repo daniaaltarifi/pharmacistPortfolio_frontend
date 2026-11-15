@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { profile } from '@/lib/portfolio-data'
 import { SectionTitle } from './section-title'
 import { Reveal, ScrollRevealText } from './motion-primitives'
+import aboutImg from '../assets/about.jfif'
 
 const statement =
   `Multi-talent & skilled Individual with high degree of
@@ -18,7 +19,7 @@ for a mutual win-win situation.`
 export function About() {
   const imageRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: imageRef, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['-12%', '12%'])
+  const y = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
 
   return (
     <section id="about" className="py-24 lg:py-32">
@@ -32,14 +33,14 @@ export function About() {
           />
 
           <div className="flex flex-col gap-6 lg:col-span-5">
-            <div ref={imageRef} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <motion.div style={{ y }} className="absolute -inset-y-[12%] inset-x-0">
-                <img
-                  src="/images/v2/boardroom.png"
-                  alt="Executive presenting to a board in a glass-walled boardroom at dusk"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </motion.div>
+            {/* Full photo at its natural shape; the whole image drifts gently on scroll instead of being cropped */}
+            <div ref={imageRef}>
+              <motion.img
+                style={{ y }}
+                src={aboutImg}
+                alt="Dr. Feras Al-Tarifi speaking at the JPSA 7th National Symposium"
+                className="block h-auto w-full rounded-3xl shadow-xl"
+              />
             </div>
             <Reveal className="flex flex-col gap-3 text-base leading-relaxed text-muted-foreground">
               {/* <p>

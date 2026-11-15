@@ -9,6 +9,7 @@ import { Contact } from '@/components/contact'
 import { Education } from '@/components/education'
 import { Events } from '@/components/events'
 import { Experience } from '@/components/experience'
+import { Projects } from '@/components/projects'
 import { Hero } from '@/components/hero'
 import { Memberships } from '@/components/memberships'
 import { MotionProvider } from '@/components/motion-primitives'
@@ -58,7 +59,15 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/experience" element={<Page><Experience /></Page>} />
+            <Route
+              path="/experience"
+              element={
+                <Page>
+                  <Experience />
+                  <Projects />
+                </Page>
+              }
+            />
             <Route path="/profile" element={<Page><Profile /></Page>} />
             <Route
               path="/news"

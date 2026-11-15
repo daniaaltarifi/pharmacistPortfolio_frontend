@@ -8,6 +8,7 @@ export function ElementTile({
   variant = 'outline',
   size = 'md',
   className,
+  symbolClassName,
 }) {
   return (
     <div
@@ -32,6 +33,7 @@ export function ElementTile({
           size === 'sm' && 'text-3xl',
           size === 'md' && 'text-5xl',
           size === 'lg' && 'text-7xl',
+          symbolClassName,
         )}
       >
         {symbol}

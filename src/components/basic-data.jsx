@@ -13,13 +13,14 @@ export function BasicData() {
           <div className="grid gap-8 rounded-2xl border border-border bg-card p-6 md:grid-cols-12 md:p-10">
             <div className="md:col-span-4">
               <ElementTile
-                number="22"
+                // number="22"
                 detail="Pharmacist"
-                symbol="FA"
+                symbol="FT"
                 name={profile.name}
                 variant="solid"
                 size="lg"
                 className="w-full max-w-64"
+                symbolClassName="text-center"
               />
             </div>
             <dl className="grid gap-x-10 sm:grid-cols-2 md:col-span-8">

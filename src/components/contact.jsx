@@ -47,7 +47,7 @@ export function Contact() {
             Contact
             <span aria-hidden="true" className="h-px w-8 bg-primary" />
           </span>
-          <h2 className="font-display text-4xl font-medium tracking-tight text-balance md:text-5xl">Get in Touch</h2>
+          <h2 className="font-title text-4xl font-medium tracking-tight text-balance md:text-5xl">Get in Touch</h2>
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             Have a project, partnership or speaking invitation in mind? Send a message and I’ll respond personally.
           </p>

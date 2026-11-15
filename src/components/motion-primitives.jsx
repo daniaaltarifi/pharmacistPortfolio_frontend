@@ -5,6 +5,7 @@ import {
   motion,
   MotionConfig,
   useInView,
+  useReducedMotion,
   useScroll,
   useTransform,
 } from 'motion/react'
@@ -45,11 +46,15 @@ export function Counter({ value, className }) {
     new Intl.NumberFormat('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(n)
 
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
-  const [display, setDisplay] = useState(match ? format(0) : value)
+  // Start as soon as any part is visible: on small screens the hero facts sit right at the fold,
+  // and a negative margin left them stuck at "0" until the visitor scrolled.
+  const inView = useInView(ref, { once: true })
+  const reduceMotion = useReducedMotion()
+  // Visitors who prefer reduced motion see the final number straight away
+  const [display, setDisplay] = useState(() => (!match ? value : format(reduceMotion ? target : 0)))
 
   useEffect(() => {
-    if (!inView || !match) return
+    if (!inView || !match || reduceMotion) return
     const controls = animate(0, target, {
       duration: 1.8,
       ease: easeOut,

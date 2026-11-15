@@ -57,17 +57,17 @@ function AwardRow({ award, open, onToggle }) {
           }`}
         >
           <div className="overflow-hidden">
-            <div className="flex flex-col gap-6 px-2 pb-7 text-primary-foreground md:flex-row md:items-center md:px-4">
+            <div className="grid gap-6 px-2 pb-7 text-primary-foreground md:grid-cols-12 md:items-center md:gap-8 md:px-4">
               {award.imageUrl && (
                 <img
                   src={award.imageUrl}
                   alt={award.title}
                   loading="lazy"
-                  className="aspect-[3/2] w-full max-w-xs rounded-lg object-cover shadow-md md:h-32 md:w-48"
+                  className="aspect-[4/3] w-full rounded-lg object-contain shadow-md md:col-span-5"
                 />
               )}
               {award.description && (
-                <p className="max-w-2xl text-sm leading-relaxed opacity-90">{award.description}</p>
+                <p className="text-sm leading-relaxed opacity-90 md:col-span-7 md:text-base">{award.description}</p>
               )}
             </div>
           </div>
@@ -84,7 +84,7 @@ export function Awards() {
   return (
     <section id="awards" className="py-24 lg:py-32">
       <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6">
-        <SectionTitle symbol="Aw" label="Awards & Recognitions" title="Moments of recognition." />
+        <SectionTitle symbol="Aw" label="Awards & Recognitions" title="Moments of Recognition." />
 
         <ol className="flex flex-col border-t border-border">
           {awards.map((award, i) => {

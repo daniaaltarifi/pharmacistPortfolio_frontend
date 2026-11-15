@@ -5,7 +5,7 @@ import { ArrowUpRight, FileText } from 'lucide-react'
 import { heroFacts, profile } from '@/lib/portfolio-data'
 import { ElementTile } from './element-tile'
 import { Counter, easeOut } from './motion-primitives'
-import idImg from '../assets/id-img.jpeg'
+import idImg from '../assets/hero.png'
 import executiveSummaryPdf from '../assets/Dr.Feras-Al-Tarifi.pdf'
 const nameLines = ['Feras', 'Al-Tarifi']
 
@@ -23,7 +23,7 @@ export function Hero() {
             {profile.title}
           </motion.p>
 
-          <h1 className="font-display text-7xl font-medium leading-none tracking-tighter sm:text-8xl xl:text-9xl">
+          <h1 className="font-redaction text-7xl font-medium leading-none tracking-tight sm:text-8xl xl:text-9xl">
             {nameLines.map((line, i) => (
               <span key={line} className="block overflow-hidden pb-2">
                 <motion.span
@@ -43,7 +43,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: easeOut }}
-            className="max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty"
+            className="max-w-xl font-redaction text-xl leading-relaxed text-muted-foreground text-pretty"
           >
             {profile.credentials}. Bridging pharmaceutical strategy, Business development, regulatory intelligence, and commercial execution for over 25 years, built on credibility, innovation, and an unwavering commitment to pharma sector and healthcare advancement.
           </motion.p>
@@ -81,7 +81,7 @@ export function Hero() {
             {heroFacts.map((fact) => (
               <div key={fact.label} className="flex flex-col gap-1">
                 <dt className="order-2 text-sm leading-snug text-muted-foreground">{fact.label}</dt>
-                <dd className="order-1 font-display text-3xl font-medium tracking-tight md:text-4xl">
+                <dd className="order-1 font-redaction text-3xl font-normal tracking-tight md:text-4xl">
                   <Counter value={fact.value} />
                 </dd>
               </div>
@@ -123,9 +123,9 @@ export function Hero() {
               transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
             >
               <ElementTile
-                number="22"
+                // number="25"
                 detail="Pharmacist"
-                symbol="FA"
+                symbol="FT"
                 name="Feras Al-Tarifi"
                 variant="solid"
                 size="lg"

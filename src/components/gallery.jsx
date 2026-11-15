@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils'
 import { SectionTitle } from './section-title'
 import { easeOut } from './motion-primitives'
 
-const altFor = (index, total) => `Gallery photo ${index + 1} of ${total}`
+// The title is the best description; untitled photos fall back to their position.
+const altFor = (image, index, total) => image.title || `Gallery photo ${index + 1} of ${total}`
 
 // Square bento layout. Every tile is a square: the page is built from square "blocks", each block is
 // either ONE big photo or FOUR small photos in a 2x2. Blocks sit two per band, so bands are always full.
@@ -124,7 +125,7 @@ function Lightbox({ images, index, onIndex, onClose }) {
           <motion.img
             key={images[index].id}
             src={images[index].imageUrl}
-            alt={altFor(index, total)}
+            alt={altFor(images[index], index, total)}
             custom={direction}
             variants={{
               enter: (d) => ({ opacity: 0, x: d * 60, scale: 0.98 }),
@@ -168,6 +169,16 @@ function Lightbox({ images, index, onIndex, onClose }) {
           </>
         )}
       </div>
+
+      {/* Caption of the current photo */}
+      {images[index].title && (
+        <p
+          className="mx-auto max-w-3xl px-6 pt-4 text-center font-display text-base text-white/90 md:text-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {images[index].title}
+        </p>
+      )}
 
       {/* Thumbnails */}
       {total > 1 && (
@@ -215,16 +226,27 @@ function Tile({ images, index, onOpen, big = false }) {
       <button
         type="button"
         onClick={() => onOpen(index)}
-        aria-label={`Open photo ${index + 1} of ${images.length}`}
+        aria-label={`Open ${img.title ? `"${img.title}"` : `photo ${index + 1}`} (${index + 1} of ${images.length})`}
         className="group relative block h-full w-full overflow-hidden rounded-2xl bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
         <img
           src={img.imageUrl}
-          alt={altFor(index, images.length)}
+          alt={altFor(img, index, images.length)}
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
         <span className="absolute inset-0 bg-gradient-to-t from-[#08192d]/70 via-[#08192d]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        {/* Caption: on hover for mouse users, always shown on touch screens (no hover there) */}
+        {img.title && (
+          <span
+            className={cn(
+              'absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08192d]/85 to-transparent text-left font-medium text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100 [@media(hover:none)]:opacity-100',
+              big ? 'line-clamp-2 px-5 pb-5 pr-20 pt-12 text-base md:text-lg' : 'line-clamp-1 px-3 pb-3 pr-12 pt-8 text-xs',
+            )}
+          >
+            {img.title}
+          </span>
+        )}
         <span
           className={cn(
             'absolute flex translate-y-2 items-center justify-center rounded-full bg-white/90 text-[#08192d] opacity-0 shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100',
