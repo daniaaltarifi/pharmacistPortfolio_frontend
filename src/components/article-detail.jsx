@@ -59,7 +59,7 @@ export function ArticleDetail({ state, backTo, backLabel, notFoundTitle }) {
 
       {item.imageUrl && (
         <div className="overflow-hidden rounded-2xl bg-muted sm:rounded-3xl">
-          <img src={item.imageUrl} alt={item.title} className="aspect-[16/9] w-full object-cover" />
+          <img src={item.imageUrl} alt={item.title} className="mx-auto block h-auto max-h-[75vh] w-auto max-w-full" />
         </div>
       )}
 

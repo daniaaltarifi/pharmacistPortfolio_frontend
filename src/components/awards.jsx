@@ -59,12 +59,15 @@ function AwardRow({ award, open, onToggle }) {
           <div className="overflow-hidden">
             <div className="grid gap-6 px-2 pb-7 text-primary-foreground md:grid-cols-12 md:items-center md:gap-8 md:px-4">
               {award.imageUrl && (
-                <img
-                  src={award.imageUrl}
-                  alt={award.title}
-                  loading="lazy"
-                  className="aspect-[4/3] w-full rounded-lg object-contain shadow-md md:col-span-5"
-                />
+                // The image keeps its own shape (shown in full), so the rounded corners land on the picture itself
+                <div className="flex justify-center md:col-span-5">
+                  <img
+                    src={award.imageUrl}
+                    alt={award.title}
+                    loading="lazy"
+                    className="block h-auto max-h-96 w-auto max-w-full rounded-2xl shadow-md"
+                  />
+                </div>
               )}
               {award.description && (
                 <p className="text-sm leading-relaxed opacity-90 md:col-span-7 md:text-base">{award.description}</p>
