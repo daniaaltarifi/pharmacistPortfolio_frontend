@@ -1,13 +1,53 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Pill } from 'lucide-react'
 import { useSkills, useTrainings } from '@/hooks/use-trainings-skills'
 import { ElementTile } from './element-tile'
 import { SectionTitle } from './section-title'
 import { easeOut, Reveal } from './motion-primitives'
 
-// Trainings shown before "Show all" (three full rows on desktop)
-const INITIAL_TRAININGS = 9
+// Trainings shown before "Show all" (three full rows of two cards)
+const INITIAL_TRAININGS = 6
+
+// Same look as the certification cards, in a compact horizontal form: image on the left
+// (on top on phones), then title, provider and year.
+function TrainingCard({ training }) {
+  return (
+    <article className="grid h-full overflow-hidden rounded-2xl border border-border bg-card shadow-lg sm:grid-cols-[2fr_3fr]">
+      <div className="relative flex aspect-[4/3] items-center justify-center bg-muted p-4 sm:aspect-auto sm:min-h-56">
+        {training.imageUrl ? (
+          // Shown in full (never cropped) with rounded corners on the picture itself
+          <img
+            src={training.imageUrl}
+            alt={training.title}
+            loading="lazy"
+            className="max-h-full max-w-full rounded-xl shadow-md sm:absolute sm:inset-4 sm:m-auto sm:max-h-[calc(100%-2rem)] sm:max-w-[calc(100%-2rem)]"
+          />
+        ) : (
+          // No image yet: a quiet placeholder instead of an empty box
+          <div className="flex flex-col items-center gap-2 text-muted-foreground" aria-hidden="true">
+            <Pill className="size-10 text-primary/70" />
+            <span className="font-display text-sm tabular-nums">{training.year}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex min-w-0 flex-col justify-between gap-6 p-6">
+        <div className="flex flex-col gap-3">
+          <h4 className="font-display text-xl font-medium leading-snug tracking-tight break-words text-balance">
+            {training.title}
+          </h4>
+          {/* The provider is the card's description line */}
+          <p className="text-sm leading-relaxed text-muted-foreground break-words">{training.provider}</p>
+        </div>
+        <div className="flex items-baseline gap-2 border-t border-border pt-4">
+          <span className="font-display text-3xl font-medium tracking-tighter tabular-nums text-primary">{training.year}</span>
+          <span className="text-sm text-muted-foreground">Year completed</span>
+        </div>
+      </div>
+    </article>
+  )
+}
 
 export function TrainingsSkills() {
   const { trainings } = useTrainings()
@@ -60,16 +100,12 @@ export function TrainingsSkills() {
             )}
           </div>
 
-          {/* 1 column on phones, 2 on tablets, 3 on desktop */}
-          <ul id="trainings-list" className="grid grid-cols-1 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+          {/* 1 card per row on phones, 2 per row from tablets up; cards in a row share the same height */}
+          <ul id="trainings-list" className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {visibleTrainings.map((t, i) => (
-              <li key={t.id ?? t.title} className="border-b border-border">
-                <Reveal delay={(i % INITIAL_TRAININGS) * 0.04} className="flex items-baseline justify-between gap-4 py-4">
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <span className="font-display text-lg font-medium leading-snug break-words">{t.title}</span>
-                    <span className="text-sm text-muted-foreground">{t.provider}</span>
-                  </div>
-                  <span className="shrink-0 text-sm tabular-nums text-primary">{t.year}</span>
+              <li key={t.id ?? t.title}>
+                <Reveal delay={(i % 2) * 0.08} className="h-full">
+                  <TrainingCard training={t} />
                 </Reveal>
               </li>
             ))}
